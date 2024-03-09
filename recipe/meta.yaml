@@ -1,22 +1,24 @@
 {% set name = "typst" %}
-{% set version = "0.10.0" %}
+{% set version = "0.11.0rc1" %}
 
 package:
   name: {{ name | lower }}
   version: {{ version }}
 
 source:
-  url: https://github.com/{{ name }}/{{ name }}/archive/refs/tags/v{{ version }}.tar.gz
-  sha256: f1b7baba3c6f6f37dee6d05c9ab53d2ba5cd879a57b6e726dedf9bc51811e132
+  url: https://github.com/{{ name }}/{{ name }}/archive/refs/tags/v{{ version.replace("rc", "-rc") }}.tar.gz
+  sha256: 355697d660054b524f18433658a94bdc75b8684e60f76bc67c3da5bd4d7ce981
 
 build:
-  number: 1
+  number: 0
 
 requirements:
   build:
     - {{ compiler('c') }}
     - {{ compiler('rust') }}
     - cargo-bundle-licenses
+  host:
+    - openssl  # [linux]
 
 test:
   commands:
