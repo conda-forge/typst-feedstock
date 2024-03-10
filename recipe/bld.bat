@@ -2,7 +2,7 @@ cargo-bundle-licenses ^
     --format yaml ^
     --output THIRDPARTY_LICENSES.yaml || goto :error
 
-cargo install --locked --root "%PREFIX%" --path .\crates\typst-cli || goto :error
+cargo install --no-track --locked --root "%PREFIX%" --path .\crates\typst-cli || goto :error
 
 goto :EOF
 
