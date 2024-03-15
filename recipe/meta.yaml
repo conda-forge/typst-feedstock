@@ -17,6 +17,8 @@ requirements:
     - {{ compiler('c') }}
     - {{ compiler('rust') }}
     - cargo-bundle-licenses
+  host:
+    - openssl  # [linux]
 
 test:
   commands:
