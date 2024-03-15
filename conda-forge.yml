@@ -11,9 +11,10 @@ conda_forge_output_validation: true
 bot:
   version_updates:
     exclude:
-      - v23-03-28
-      - 23-03-28
-      - v23-03-21
-      - 23-03-21
-      - v23-03-21-2
-      - 23-03-21-2
+    - v23-03-28
+    - 23-03-28
+    - v23-03-21
+    - 23-03-21
+    - v23-03-21-2
+    - 23-03-21-2
+  automerge: true
