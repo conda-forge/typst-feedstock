@@ -1,14 +1,5 @@
-github:
-  branch_name: main
-  tooling_branch_name: main
-build_platform:
-  osx_arm64: osx_64
-  linux_aarch64: linux_64
-test: native_and_emulated
-conda_build:
-  error_overlinking: true
-conda_forge_output_validation: true
 bot:
+  automerge: true
   version_updates:
     exclude:
     - v23-03-28
@@ -17,4 +8,16 @@ bot:
     - 23-03-21
     - v23-03-21-2
     - 23-03-21-2
-  automerge: true
+build_platform:
+  linux_aarch64: linux_64
+  osx_arm64: osx_64
+conda_build:
+  error_overlinking: true
+conda_forge_output_validation: true
+github:
+  branch_name: main
+  tooling_branch_name: main
+provider:
+  linux_aarch64: default
+  linux_ppc64le: default
+test: native_and_emulated
