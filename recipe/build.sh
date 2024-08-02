@@ -1,9 +1,5 @@
 #!/usr/bin/env bash
 
-if [[ "${target_platform}" == linux-* ]]; then
-    export OPENSSL_DIR=$PREFIX
-fi
-
 cargo-bundle-licenses \
     --format yaml \
     --output THIRDPARTY_LICENSES.yaml
