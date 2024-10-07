@@ -1,3 +1,3 @@
 @echo off
 set "TYPST_PACKAGE_PATH_CONDA_BACKUP=%TYPST_PACKAGE_PATH%"
-set "TYPST_PACKAGE_PATH="%CONDA_PREFIX%\Library\share\typst\packages"
+set "TYPST_PACKAGE_PATH=%CONDA_PREFIX%\Library\share\typst\packages"
