@@ -1,5 +1,5 @@
 {% set name = "typst" %}
-{% set version = "0.12.0rc1" %}
+{% set version = "0.12.0rc2" %}
 
 package:
   name: {{ name | lower }}
@@ -7,10 +7,10 @@ package:
 
 source:
   url: https://github.com/{{ name }}/{{ name }}/archive/refs/tags/v{{ version.replace("rc", "-rc") }}.tar.gz
-  sha256: a4a8f5275a642ec5ee79ef8c29c77d98a317cd2ae0bae46c3a1eef1167cd1725
+  sha256: 6866c4c81f89545638974d41c2b2f4fc29ea8969fff241a922b8bef38392e92d
 
 build:
-  number: 4
+  number: 0
 
 requirements:
   build:
