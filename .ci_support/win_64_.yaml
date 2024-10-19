@@ -5,7 +5,7 @@ c_stdlib:
 channel_sources:
 - conda-forge
 channel_targets:
-- conda-forge typst_rc
+- conda-forge main
 rust_compiler:
 - rust
 target_platform:

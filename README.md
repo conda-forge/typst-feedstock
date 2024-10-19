@@ -86,14 +86,14 @@ Current release info
 Installing typst
 ================
 
-Installing `typst` from the `conda-forge/label/typst_rc` channel can be achieved by adding `conda-forge/label/typst_rc` to your channels with:
+Installing `typst` from the `conda-forge` channel can be achieved by adding `conda-forge` to your channels with:
 
 ```
-conda config --add channels conda-forge/label/typst_rc
+conda config --add channels conda-forge
 conda config --set channel_priority strict
 ```
 
-Once the `conda-forge/label/typst_rc` channel has been enabled, `typst` can be installed with `conda`:
+Once the `conda-forge` channel has been enabled, `typst` can be installed with `conda`:
 
 ```
 conda install typst
@@ -108,26 +108,26 @@ mamba install typst
 It is possible to list all of the versions of `typst` available on your platform with `conda`:
 
 ```
-conda search typst --channel conda-forge/label/typst_rc
+conda search typst --channel conda-forge
 ```
 
 or with `mamba`:
 
 ```
-mamba search typst --channel conda-forge/label/typst_rc
+mamba search typst --channel conda-forge
 ```
 
 Alternatively, `mamba repoquery` may provide more information:
 
 ```
 # Search all versions available on your platform:
-mamba repoquery search typst --channel conda-forge/label/typst_rc
+mamba repoquery search typst --channel conda-forge
 
 # List packages depending on `typst`:
-mamba repoquery whoneeds typst --channel conda-forge/label/typst_rc
+mamba repoquery whoneeds typst --channel conda-forge
 
 # List dependencies of `typst`:
-mamba repoquery depends typst --channel conda-forge/label/typst_rc
+mamba repoquery depends typst --channel conda-forge
 ```
 
 
