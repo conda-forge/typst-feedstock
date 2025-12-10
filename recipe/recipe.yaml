@@ -39,11 +39,10 @@ tests:
       - typst --version
       - if: unix
         then:
-          - set -x
-          - typst info 2>&1 | grep TYPST_FONTS_PATH | grep $CONDA_PREFIX/fonts
+          - typst info 2>&1 | grep TYPST_FONT_PATHS | grep $CONDA_PREFIX/fonts
           - typst info 2>&1 | grep TYPST_PACKAGE_PATH | grep $CONDA_PREFIX/share/typst/packages
         else:
-          - typst info 2>&1 | findstr TYPST_FONTS_PATH | findstr "%CONDA_PREFIX%\fonts"
+          - typst info 2>&1 | findstr TYPST_FONT_PATHS | findstr "%CONDA_PREFIX%\fonts"
           - typst info 2>&1 | findstr TYPST_PACKAGE_PATH | findstr "%CONDA_PREFIX%\share\typst\packages"
 about:
   license: Apache-2.0
