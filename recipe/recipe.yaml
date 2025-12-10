@@ -37,6 +37,7 @@ tests:
       strict: true
   - script:
       - typst --version
+      - typst info
       - if: unix
         then:
           - typst info 2>&1 | grep TYPST_FONT_PATHS | grep $CONDA_PREFIX/fonts
