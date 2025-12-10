@@ -39,6 +39,7 @@ tests:
       - typst --version
       - if: unix
         then:
+          - set -x
           - typst info 2>&1 | grep TYPST_FONTS_PATH | grep $CONDA_PREFIX/fonts
           - typst info 2>&1 | grep TYPST_PACKAGE_PATH | grep $CONDA_PREFIX/share/typst/packages
         else:
