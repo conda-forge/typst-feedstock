@@ -29,16 +29,21 @@ requirements:
       then: openssl
 
 tests:
+  - package_contents:
+      bin:
+        - typst
+      files:
+        - etc/conda/env_vars.d/typst.json
+      strict: true
   - script:
       - typst --version
       - if: unix
         then:
-          - typst info | grep TYPST_FONTS_PATH | grep $CONDA_PREFIX/fonts
-          - typst info | grep TYPST_PACKAGE_PATH | grep $CONDA_PREFIX/share/typst/packages
+          - typst info 2>&1 | grep TYPST_FONTS_PATH | grep $CONDA_PREFIX/fonts
+          - typst info 2>&1 | grep TYPST_PACKAGE_PATH | grep $CONDA_PREFIX/share/typst/packages
         else:
-          - typst info | findstr TYPST_FONTS_PATH | findstr %CONDA_PREFIX%/fonts
-          - typst info | findstr TYPST_PACKAGE_PATH | findstr %CONDA_PREFIX%/share/typst/packages
-
+          - typst info 2>&1 | findstr TYPST_FONTS_PATH | findstr "%CONDA_PREFIX%\fonts"
+          - typst info 2>&1 | findstr TYPST_PACKAGE_PATH | findstr "%CONDA_PREFIX%\share\typst\packages"
 about:
   license: Apache-2.0
   license_file:
