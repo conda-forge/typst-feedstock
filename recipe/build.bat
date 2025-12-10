@@ -4,16 +4,13 @@ cargo-bundle-licenses ^
 
 cargo install --no-track --locked --root "%LIBRARY_PREFIX%" --path .\crates\typst-cli || goto :error
 
-setlocal EnableDelayedExpansion
-
-:: Copy the [de]activate scripts to %PREFIX%\etc\conda\[de]activate.d.
-:: This will allow them to be run on environment activation.
-for %%F in (activate deactivate) DO (
-    if not exist %PREFIX%\etc\conda\%%F.d mkdir %PREFIX%\etc\conda\%%F.d
-    copy %RECIPE_DIR%\scripts\%%F.bat %PREFIX%\etc\conda\%%F.d\%PKG_NAME%_%%F.bat || goto :error
-    :: Copy unix shell activation scripts, needed by Windows Bash users
-    copy %RECIPE_DIR%\scripts\%%F-win.sh %PREFIX%\etc\conda\%%F.d\%PKG_NAME%_%%F.sh || goto :error
-)
+if not exist %PREFIX%\etc\conda\env_vars.d mkdir %PREFIX%\etc\conda\env_vars.d
+(
+echo {
+echo     "TYPST_PACKAGE_PATH": "%LIBRARY_PREFIX:\=/%/share/typst/packages",
+echo     "TYPST_FONT_PATHS": "%LIBRARY_PREFIX:\=/%/fonts"
+echo }
+) > %PREFIX%\etc\conda\env_vars.d\typst.json
 
 goto :EOF
 
