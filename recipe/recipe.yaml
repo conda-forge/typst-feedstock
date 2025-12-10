@@ -1,0 +1,61 @@
+schema_version: 1
+
+context:
+  name: typst
+  version: 0.14.1
+
+package:
+  name: ${{ name | lower }}
+  version: ${{ version }}
+
+source:
+  url: https://github.com/${{ name }}/${{ name }}/archive/refs/tags/v${{ version }}.tar.gz
+  sha256: 83d132348a8c9481a8a483cdf823d5083ba456466410935f25240f6c26e23c38
+
+build:
+  number: 1
+
+requirements:
+  build:
+    - ${{ compiler('c') }}
+    - ${{ stdlib('c') }}
+    - ${{ compiler('rust') }}
+    - cargo-bundle-licenses
+  host:
+    - if: linux
+      then: openssl
+  run:
+    - if: linux
+      then: openssl
+
+tests:
+  - package_contents:
+      bin:
+        - typst
+      files:
+        - etc/conda/env_vars.d/typst.json
+      strict: true
+  - script:
+      - typst --version
+      - typst info
+      - if: unix
+        then:
+          - typst info 2>&1 | grep TYPST_FONT_PATHS | grep $CONDA_PREFIX/fonts
+          - typst info 2>&1 | grep TYPST_PACKAGE_PATH | grep $CONDA_PREFIX/share/typst/packages
+        else:
+          - typst info 2>&1 | findstr TYPST_FONT_PATHS | findstr "%CONDA_PREFIX%\fonts"
+          - typst info 2>&1 | findstr TYPST_PACKAGE_PATH | findstr "%CONDA_PREFIX%\share\typst\packages"
+about:
+  license: Apache-2.0
+  license_file:
+    - LICENSE
+    - NOTICE
+    - THIRDPARTY_LICENSES.yaml
+  summary: A new markup-based typesetting system that is powerful and easy to learn.
+  homepage: https://github.com/typst/typst
+
+extra:
+  recipe-maintainers:
+    - AdrianFreundQC
+    - freundTech
+    - pavelzw

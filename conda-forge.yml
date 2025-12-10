@@ -2,12 +2,12 @@ bot:
   automerge: true
   version_updates:
     exclude:
-    - v23-03-28
-    - 23-03-28
-    - v23-03-21
-    - 23-03-21
-    - v23-03-21-2
-    - 23-03-21-2
+      - v23-03-28
+      - 23-03-28
+      - v23-03-21
+      - 23-03-21
+      - v23-03-21-2
+      - 23-03-21-2
 build_platform:
   linux_aarch64: linux_64
   linux_ppc64le: linux_64
@@ -19,3 +19,5 @@ github:
   branch_name: main
   tooling_branch_name: main
 test: native_and_emulated
+conda_install_tool: pixi
+conda_build_tool: rattler-build
