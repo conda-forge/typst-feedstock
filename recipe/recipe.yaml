@@ -63,6 +63,11 @@ tests:
         - typst
       files:
         - etc/conda/env_vars.d/typst.json
+        - if: unix
+          then:
+            - share/bash-completion/completions/typst
+            - share/fish/vendor_completions.d/typst.fish
+            - share/zsh/site-functions/_typst
       strict: true
   - script:
       - typst --version
