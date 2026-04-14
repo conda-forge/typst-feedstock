@@ -19,6 +19,9 @@ build:
       CARGO_PROFILE_RELEASE_STRIP: symbols
       CARGO_PROFILE_RELEASE_LTO: fat
     content:
+      - if: linux
+        then:
+          - export OPENSSL_DIR=$PREFIX
       - cd crates/typst-cli
       - if: unix
         then:
@@ -82,7 +85,7 @@ about:
   license_file:
     - LICENSE
     - NOTICE
-    - THIRDPARTY_LICENSES.yaml
+    - THIRDPARTY.yml
   summary: A markup-based typesetting system that is powerful and easy to learn.
   homepage: https://typst.app
   repository: https://github.com/typst/typst
