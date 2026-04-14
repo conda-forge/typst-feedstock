@@ -29,15 +29,19 @@ build:
       - if: unix
         then:
           - mkdir -p $PREFIX/share/zsh/site-functions $PREFIX/share/bash-completion/completions $PREFIX/share/fish/vendor_completions.d
-          - $PREFIX/bin/typst completion zsh > $PREFIX/share/zsh/site-functions/_typst
-          - $PREFIX/bin/typst completion bash > $PREFIX/share/bash-completion/completions/typst
-          - $PREFIX/bin/typst completion fish > $PREFIX/share/fish/vendor_completions.d/typst.fish
+          - $PREFIX/bin/typst completions zsh > $PREFIX/share/zsh/site-functions/_typst
+          - $PREFIX/bin/typst completions bash > $PREFIX/share/bash-completion/completions/typst
+          - $PREFIX/bin/typst completions fish > $PREFIX/share/fish/vendor_completions.d/typst.fish
       - if: unix
         then:
           - mkdir -p $PREFIX/etc/conda/env_vars.d
           - 'echo {\"TYPST_PACKAGE_PATH\": \"$PREFIX/share/typst/packages\", \"TYPST_FONT_PATHS\": \"$PREFIX/fonts\"} > $PREFIX/etc/conda/env_vars.d/typst.json'
         else:
           - mkdir %PREFIX%\etc\conda\env_vars.d
+          - setlocal enabledelayedexpansion
+          - 'set "ESCAPED_PREFIX=%PREFIX:\=\\%"'
+          - 'echo {"TYPST_PACKAGE_PATH": "!ESCAPED_PREFIX!\\share\\typst\\packages", "TYPST_FONT_PATHS": "!ESCAPED_PREFIX!\\fonts"} > %PREFIX%\etc\conda\env_vars.d\typst.json'
+          - endlocal
 
 requirements:
   build:
@@ -67,6 +71,12 @@ tests:
         else:
           - typst info 2>&1 | findstr TYPST_FONT_PATHS | findstr "%CONDA_PREFIX%\fonts"
           - typst info 2>&1 | findstr TYPST_PACKAGE_PATH | findstr "%CONDA_PREFIX%\share\typst\packages"
+  - requirements:
+      run:
+        - font-otf-fontawesome
+    script:
+      - typst fonts
+      - typst fonts | grep "Font Awesome"
 about:
   license: Apache-2.0
   license_file:
