@@ -12,10 +12,10 @@ cargo install --no-track --locked --root "$PREFIX" --path crates/typst-cli
 
 "$STRIP" "$PREFIX/bin/typst"
 
-# Copy the [de]activate scripts to $PREFIX/etc/conda/[de]activate.d.
-# This will allow them to be run on environment activation.
-for CHANGE in "activate" "deactivate"
-do
-    mkdir -p "${PREFIX}/etc/conda/${CHANGE}.d"
-    cp "${RECIPE_DIR}/scripts/${CHANGE}.sh" "${PREFIX}/etc/conda/${CHANGE}.d/${PKG_NAME}_${CHANGE}.sh"
-done
+mkdir -p $PREFIX/etc/conda/env_vars.d
+cat > $PREFIX/etc/conda/env_vars.d/typst.json << EOF
+{
+    "TYPST_PACKAGE_PATH": "$PREFIX/share/typst/packages",
+    "TYPST_FONT_PATHS": "$PREFIX/fonts"
+}
+EOF
