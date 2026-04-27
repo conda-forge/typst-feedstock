@@ -1,0 +1,107 @@
+schema_version: 1
+
+context:
+  name: typst
+  version: 0.14.1
+
+package:
+  name: ${{ name | lower }}
+  version: ${{ version }}
+
+source:
+  url: https://github.com/${{ name }}/${{ name }}/archive/refs/tags/v${{ version }}.tar.gz
+  sha256: 83d132348a8c9481a8a483cdf823d5083ba456466410935f25240f6c26e23c38
+
+build:
+  number: 1
+  script:
+    env:
+      CARGO_PROFILE_RELEASE_STRIP: symbols
+      CARGO_PROFILE_RELEASE_LTO: fat
+    content:
+      - if: linux
+        then:
+          - export OPENSSL_DIR=$PREFIX
+      - cd crates/typst-cli
+      - if: unix
+        then:
+          - cargo auditable install --locked --no-track --bins --root ${{ PREFIX }} --path .
+        else:
+          - cargo auditable install --locked --no-track --bins --root %LIBRARY_PREFIX% --path .
+      - cargo-bundle-licenses --format yaml --output ../../THIRDPARTY.yml
+      - if: unix
+        then:
+          - mkdir -p $PREFIX/share/zsh/site-functions $PREFIX/share/bash-completion/completions $PREFIX/share/fish/vendor_completions.d
+          - $PREFIX/bin/typst completions zsh > $PREFIX/share/zsh/site-functions/_typst
+          - $PREFIX/bin/typst completions bash > $PREFIX/share/bash-completion/completions/typst
+          - $PREFIX/bin/typst completions fish > $PREFIX/share/fish/vendor_completions.d/typst.fish
+      - if: unix
+        then:
+          - mkdir -p $PREFIX/etc/conda/env_vars.d
+          - 'echo {\"TYPST_PACKAGE_PATH\": \"$PREFIX/share/typst/packages\", \"TYPST_FONT_PATHS\": \"$PREFIX/fonts\"} > $PREFIX/etc/conda/env_vars.d/typst.json'
+        else:
+          - mkdir %PREFIX%\etc\conda\env_vars.d
+          - setlocal enabledelayedexpansion
+          - 'set "ESCAPED_PREFIX=%PREFIX:\=\\%"'
+          - 'echo {"TYPST_PACKAGE_PATH": "!ESCAPED_PREFIX!\\share\\typst\\packages", "TYPST_FONT_PATHS": "!ESCAPED_PREFIX!\\fonts"} > %PREFIX%\etc\conda\env_vars.d\typst.json'
+          - endlocal
+
+requirements:
+  build:
+    - ${{ stdlib('c') }}
+    - ${{ compiler('c') }}
+    - ${{ compiler('rust') }}
+    - cargo-bundle-licenses
+    - cargo-auditable
+  host:
+    - if: linux
+      then: openssl
+
+tests:
+  - package_contents:
+      bin:
+        - typst
+      files:
+        - etc/conda/env_vars.d/typst.json
+        - if: unix
+          then:
+            - share/bash-completion/completions/typst
+            - share/fish/vendor_completions.d/typst.fish
+            - share/zsh/site-functions/_typst
+      strict: true
+  - script:
+      - typst --version
+      - typst info
+      - if: unix
+        then:
+          - typst info 2>&1 | grep TYPST_FONT_PATHS | grep $CONDA_PREFIX/fonts
+          - typst info 2>&1 | grep TYPST_PACKAGE_PATH | grep $CONDA_PREFIX/share/typst/packages
+        else:
+          - 'typst info 2>&1 | findstr TYPST_FONT_PATHS | findstr "%CONDA_PREFIX%\\fonts"'
+          - 'typst info 2>&1 | findstr TYPST_PACKAGE_PATH | findstr "%CONDA_PREFIX%\\share\\typst\\packages"'
+  - requirements:
+      run:
+        - font-otf-fontawesome
+    script:
+      - typst fonts
+      - if: unix
+        then:
+          - typst fonts | grep "Font Awesome"
+        else:
+          - typst fonts | findstr "Font Awesome"
+about:
+  license: Apache-2.0
+  license_file:
+    - LICENSE
+    - NOTICE
+    - THIRDPARTY.yml
+  summary: A markup-based typesetting system that is powerful and easy to learn.
+  homepage: https://typst.app
+  repository: https://github.com/typst/typst
+  documentation: https://typst.app/docs
+
+extra:
+  recipe-maintainers:
+    - AdrianFreundQC
+    - freundTech
+    - pavelzw
