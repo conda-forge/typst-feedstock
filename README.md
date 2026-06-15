@@ -3,11 +3,15 @@ About typst-feedstock
 
 Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/typst-feedstock/blob/main/LICENSE.txt)
 
-Home: https://github.com/typst/typst
+Home: https://typst.app/
 
 Package license: Apache-2.0
 
-Summary: A new markup-based typesetting system that is powerful and easy to learn.
+Summary: A markup-based typesetting system that is powerful and easy to learn.
+
+Development: https://github.com/typst/typst
+
+Documentation: https://typst.app/docs
 
 Current build status
 ====================
@@ -38,6 +42,13 @@ Current build status
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=20172&branchName=main">
                   <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/typst-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_64_" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>osx_arm64</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=20172&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/typst-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_arm64_" alt="variant">
                 </a>
               </td>
             </tr><tr>
