@@ -41,10 +41,8 @@ build:
           - 'echo {\"TYPST_PACKAGE_PATH\": \"$PREFIX/share/typst/packages\", \"TYPST_FONT_PATHS\": \"$PREFIX/fonts\"} > $PREFIX/etc/conda/env_vars.d/typst.json'
         else:
           - mkdir %PREFIX%\etc\conda\env_vars.d
-          - setlocal enabledelayedexpansion
-          - 'set "ESCAPED_PREFIX=%PREFIX:\=\\%"'
-          - 'echo {"TYPST_PACKAGE_PATH": "!ESCAPED_PREFIX!\\share\\typst\\packages", "TYPST_FONT_PATHS": "!ESCAPED_PREFIX!\\fonts"} > %PREFIX%\etc\conda\env_vars.d\typst.json'
-          - endlocal
+          - 'set "FWD_PREFIX=%PREFIX:\=/%"'
+          - 'echo {"TYPST_PACKAGE_PATH": "%FWD_PREFIX%/share/typst/packages", "TYPST_FONT_PATHS": "%FWD_PREFIX%/fonts"} > %PREFIX%\etc\conda\env_vars.d\typst.json'
 
 requirements:
   build:
@@ -77,8 +75,9 @@ tests:
           - typst info 2>&1 | grep TYPST_FONT_PATHS | grep $CONDA_PREFIX/fonts
           - typst info 2>&1 | grep TYPST_PACKAGE_PATH | grep $CONDA_PREFIX/share/typst/packages
         else:
-          - 'typst info 2>&1 | findstr TYPST_FONT_PATHS | findstr "%CONDA_PREFIX%\\fonts"'
-          - 'typst info 2>&1 | findstr TYPST_PACKAGE_PATH | findstr "%CONDA_PREFIX%\\share\\typst\\packages"'
+          - 'set "FWD_CONDA_PREFIX=%CONDA_PREFIX:\=/%"'
+          - 'typst info 2>&1 | findstr TYPST_FONT_PATHS | findstr "%FWD_CONDA_PREFIX%/fonts"'
+          - 'typst info 2>&1 | findstr TYPST_PACKAGE_PATH | findstr "%FWD_CONDA_PREFIX%/share/typst/packages"'
   - requirements:
       run:
         - font-otf-fontawesome
