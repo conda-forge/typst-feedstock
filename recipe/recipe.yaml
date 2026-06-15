@@ -1,15 +1,14 @@
 schema_version: 1
 
 context:
-  name: typst
   version: 0.15.0
 
 package:
-  name: ${{ name | lower }}
+  name: typst
   version: ${{ version }}
 
 source:
-  url: https://github.com/${{ name }}/${{ name }}/archive/refs/tags/v${{ version }}.tar.gz
+  url: https://github.com/typst/typst/archive/refs/tags/v${{ version }}.tar.gz
   sha256: 5044bd12138491c6e880df0e09056a9ae4607d937c73962d5806402ae6ee96a6
 
 build:
