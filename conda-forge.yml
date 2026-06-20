@@ -10,6 +10,7 @@ bot:
     - 23-03-21-2
 build_platform:
   linux_ppc64le: linux_64
+  win_arm64: win_64
 provider:
   linux_aarch64: default
   osx_arm64: default
